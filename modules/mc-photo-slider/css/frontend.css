@@ -1,0 +1,215 @@
+/* Ensure [hidden] always works even if theme overrides it */
+.mc-photo-slider [hidden] { display: none !important; }
+
+.mc-photo-slider {
+  width: 100%;
+  outline: none;
+  touch-action: pan-y;
+}
+
+.mc-photo-slider__viewport {
+  position: relative;
+  width: 100%;
+  background: #4f5f8e;
+  overflow: hidden;
+}
+
+/* Aspect ratios (fixed): Landscape = 4x3, Vertical = 3x4 */
+.mc-photo-slider.is-landscape .mc-photo-slider__viewport { aspect-ratio: 4 / 3; }
+.mc-photo-slider.is-vertical  .mc-photo-slider__viewport { aspect-ratio: 3 / 4; }
+.mc-photo-slider.is-square    .mc-photo-slider__viewport { aspect-ratio: 1 / 1; }
+
+.mc-photo-slider__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease;
+}
+
+.mc-photo-slider__slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mc-photo-slider__img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Caption overlay (bumped size) */
+.mc-photo-slider__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #fff;
+  background: rgba(0,0,0,.8);
+}
+
+.mc-photo-slider__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 10px;
+}
+
+.mc-photo-slider__count {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.mc-photo-slider__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Buttons: icons only */
+.mc-photo-slider__btn {
+  appearance: none;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+  border-radius: 0 !important;
+  color: #000;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.mc-photo-slider__btn:hover,
+.mc-photo-slider__btn:focus-visible {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--mcps-icon-hover-color, var(--wp--preset--color--primary, #2271b1));
+}
+
+.mc-photo-slider__btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.mc-photo-slider__btn .dashicons {
+  font-size: 20px;
+  width: auto;
+  height: auto;
+  line-height: 1;
+}
+
+.mc-photo-slider__notice {
+  padding: 0;
+  border: 1px dashed #999;
+  background: #fff;
+  font-size: 14px;
+}
+
+
+/* v2.1.5: Force control icon color to black by default (themes sometimes set buttons to white) */
+.mc-photo-slider__btn,
+.mc-photo-slider__btn .dashicons,
+.mc-photo-slider__btn .mc-photo-slider__icon {
+  color: #000 !important;
+}
+
+/* Only the icon color changes on hover/focus (no background) */
+.mc-photo-slider__btn:hover,
+.mc-photo-slider__btn:focus-visible {
+  color: var(--mcps-icon-hover-color, var(--wp--preset--color--primary, #2271b1)) !important;
+}
+
+.mc-photo-slider__btn:hover .dashicons,
+.mc-photo-slider__btn:focus-visible .dashicons {
+  color: inherit !important;
+}
+
+
+/* v2.4.0: Respect user OS/browser setting to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .mc-photo-slider__slide {
+    transition: none !important; /* remove fade animation */
+  }
+}
+
+
+/* v2.4.0: Optional thumbnail rail */
+.mc-photo-slider__thumbs { margin-top: 10px; }
+
+.mc-photo-slider__thumbs-track{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  overflow-y: visible;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+
+  /* v2.4.0: Padding prevents the active/focus border from clipping at edges */
+  padding: 0;
+  scroll-padding-left: 10px;
+  scroll-padding-right: 10px;
+
+  /* Hide horizontal scrollbar while keeping scroll/swipe */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mc-photo-slider__thumbs-track::-webkit-scrollbar{ display:none; } /* WebKit */
+
+.mc-photo-slider__thumbs-track::-webkit-scrollbar{ display:none; } /* WebKit */
+
+.mc-photo-slider__thumb{
+  appearance:none;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding: 0;
+  margin:0;
+  flex:0 0 auto;
+  cursor:pointer;
+  scroll-snap-align:start;
+  line-height:1;
+  color:#000 !important;
+}
+
+.mc-photo-slider__thumb-img{
+  display:block;
+  width:52px;
+  height:52px;
+  object-fit:cover;
+  border-radius:4px;
+  border: 2px solid transparent; /* v2.4.0: crisp active border without layout shift */
+  box-sizing:border-box;
+}
+
+/* Sizes */
+.mc-photo-slider__thumbs.is-thumb-sm .mc-photo-slider__thumb-img{ width:44px; height:44px; }
+.mc-photo-slider__thumbs.is-thumb-md .mc-photo-slider__thumb-img{ width:52px; height:52px; }
+.mc-photo-slider__thumbs.is-thumb-lg .mc-photo-slider__thumb-img{ width:64px; height:64px; }
+
+/* Active thumb indication (v2.4.0: use box-shadow so it won't get clipped) */
+
+.mc-photo-slider__thumb:hover,
+
+
+
+
+/* v2.4.0: Active thumbnail indicator */
+.mc-photo-slider__thumb[aria-current="true"] .mc-photo-slider__thumb-img{border-color: currentColor;}
+
+
+/* v2.4.0: Avoid "double highlight" on thumbnails (active border + browser focus outline).
+   We move focus indication onto the thumbnail image border so only one highlight is shown. */
+.mc-photo-slider__thumb:focus-visible{
+  outline: none !important;
+}
+
+.mc-photo-slider__thumb:focus-visible .mc-photo-slider__thumb-img{
+  border-color: var(--mcps-icon-hover-color, var(--wp--preset--color--primary, #2271b1)) !important;
+}
