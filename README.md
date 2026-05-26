@@ -59,3 +59,9 @@ This repository serves as:
 ## License
 
 Private/internal use unless otherwise specified.
+
+## Historical Notes
+
+This repository represents the photo-only branch of the slider.
+
+A separate Photo + Video Slider fork was later created that introduced support for YouTube and Vimeo embeds. The two projects should be treated as separate codebases to avoid reintroducing video-related complexity into the photo-only version.
